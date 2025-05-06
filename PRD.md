@@ -56,8 +56,8 @@
 **5. 技術需求**
 
 - **開發平台：** Flutter
-- **資料庫：** SQLite (或其他本地端資料庫)
-- **通知服務：** Firebase Cloud Messaging (FCM) (Android)、Apple Push Notification service (APNs) (iOS)
+- **資料庫：** SQLite (本地端資料庫)
+- **通知服務：** 本地通知 (Local Notification)
 
 **6. 限制與假設**
 
@@ -65,7 +65,7 @@
   - Android：8.0 以上
   - iOS：13.0 以上
 - **網路連線：**
-  - 部分功能 (如：預設肯定語句庫更新) 可能需要網路連線。
+  - 不需要網路連線
 - **使用者行為：**
   - 假設使用者會定期開啟應用程式，並更新肯定語句。
 
