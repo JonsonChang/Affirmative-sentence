@@ -41,10 +41,7 @@
   - 簡潔、直觀、易於操作。
   - 提供多種主題或顏色選擇，增加個人化。
   - 字體大小、顏色、樣式可調整，方便閱讀。
-- **使用者體驗：**
-  - 操作流程順暢，減少使用者操作步驟。
-  - 通知提示明確，不會過於干擾使用者。
-  - 提供新手引導，幫助使用者快速上手。
+- 
 
 **4.3 其他需求**
 
@@ -58,12 +55,9 @@
 
 **5. 技術需求**
 
-- **開發平台：** React Native, Flutter, 或其他跨平台框架
+- **開發平台：** Flutter
 - **資料庫：** SQLite (或其他本地端資料庫)
 - **通知服務：** Firebase Cloud Messaging (FCM) (Android)、Apple Push Notification service (APNs) (iOS)
-- **其他：**
-  - 版本控制：Git
-  - 開發工具：VS Code, Android Studio, Xcode
 
 **6. 限制與假設**
 
