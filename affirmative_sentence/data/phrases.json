@@ -1,0 +1,62 @@
+[
+  {
+    "id": 1,
+    "name": "自我肯定",
+    "phrases": [
+      {
+        "id": 1,
+        "text": "我值得被愛與尊重",
+        "categoryId": 1,
+        "isFavorite": false
+      },
+      {
+        "id": 2,
+        "text": "我有能力實現我的目標",
+        "categoryId": 1,
+        "isFavorite": false
+      },
+      {
+        "id": 3,
+        "text": "我接受並愛我現在的自己",
+        "categoryId": 1,
+        "isFavorite": false
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "name": "積極心態",
+    "phrases": [
+      {
+        "id": 4,
+        "text": "每一天都是新的開始",
+        "categoryId": 2,
+        "isFavorite": false
+      },
+      {
+        "id": 5,
+        "text": "我選擇看到生活中的美好",
+        "categoryId": 2,
+        "isFavorite": false
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "name": "工作激勵",
+    "phrases": [
+      {
+        "id": 6,
+        "text": "我的工作為世界帶來價值",
+        "categoryId": 3,
+        "isFavorite": false
+      },
+      {
+        "id": 7,
+        "text": "我享受工作中的挑戰",
+        "categoryId": 3,
+        "isFavorite": false
+      }
+    ]
+  }
+]
