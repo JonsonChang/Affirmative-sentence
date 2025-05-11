@@ -34,6 +34,9 @@ class S {
   String get success => _localizedStrings['success']!;
   String get add => _localizedStrings['add']!;
   String get language => _localizedStrings['language']!;
+  String get lightTheme => _localizedStrings['lightTheme']!;
+  String get darkTheme => _localizedStrings['darkTheme']!;
+  String get systemTheme => _localizedStrings['systemTheme']!;
 }
 
 class _SDelegate extends LocalizationsDelegate<S> {
@@ -70,7 +73,10 @@ S _lookupS(Locale locale) {
         'health': '健康',
         'success': '成功',
         'add': '新增',
-        'language': '語言'
+        'language': '語言',
+        'lightTheme': '淺色',
+        'darkTheme': '深色',
+        'systemTheme': '系統預設'
       });
     default:
       return S({
@@ -89,7 +95,10 @@ S _lookupS(Locale locale) {
         'health': 'Health',
         'success': 'Success',
         'add': 'Add',
-        'language': 'Language'
+        'language': 'Language',
+        'lightTheme': 'Light',
+        'darkTheme': 'Dark',
+        'systemTheme': 'System'
       });
   }
 }

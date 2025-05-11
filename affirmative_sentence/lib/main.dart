@@ -20,19 +20,33 @@ class MyApp extends StatefulWidget {
 
 class MyAppState extends State<MyApp> {
   Locale? _locale;
+  ThemeMode _themeMode = ThemeMode.system;
 
   @override
   void initState() {
     super.initState();
-    _loadLocale();
+    _loadSettings();
   }
 
-  Future<void> _loadLocale() async {
+  Future<void> _loadSettings() async {
     final prefs = await SharedPreferences.getInstance();
+    
+    // Load language
     final languageCode = prefs.getString('languageCode');
     if (languageCode != null) {
       setState(() {
         _locale = Locale(languageCode);
+      });
+    }
+
+    // Load theme
+    final themeMode = prefs.getString('themeMode');
+    if (themeMode != null) {
+      setState(() {
+        _themeMode = ThemeMode.values.firstWhere(
+          (e) => e.toString() == 'ThemeMode.$themeMode',
+          orElse: () => ThemeMode.system,
+        );
       });
     }
   }
@@ -42,6 +56,14 @@ class MyAppState extends State<MyApp> {
     await prefs.setString('languageCode', locale.languageCode);
     setState(() {
       _locale = locale;
+    });
+  }
+
+  void changeTheme(ThemeMode themeMode) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('themeMode', themeMode.toString().split('.').last);
+    setState(() {
+      _themeMode = themeMode;
     });
   }
 
@@ -60,6 +82,12 @@ class MyAppState extends State<MyApp> {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
+      darkTheme: ThemeData(
+        primarySwatch: Colors.blue,
+        brightness: Brightness.dark,
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+      ),
+      themeMode: _themeMode,
       home: const HomeScreen(),
       debugShowCheckedModeBanner: false,
     );

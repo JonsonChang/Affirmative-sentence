@@ -15,5 +15,8 @@
   "health": "Health",
   "success": "Success",
   "add": "Add",
-  "language": "Language"
+  "language": "Language",
+  "lightTheme": "Light",
+  "darkTheme": "Dark", 
+  "systemTheme": "System"
 }

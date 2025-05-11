@@ -15,5 +15,8 @@
   "health": "健康",
   "success": "成功",
   "add": "新增",
-  "language": "語言"
+  "language": "語言",
+  "lightTheme": "淺色",
+  "darkTheme": "深色",
+  "systemTheme": "系統預設"
 }

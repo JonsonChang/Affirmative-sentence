@@ -47,6 +47,38 @@ class _SettingsScreenState extends State<SettingsScreen> {
     );
   }
 
+  Widget _buildThemeSelector(BuildContext context) {
+    final currentTheme = Theme.of(context).brightness == Brightness.dark 
+        ? ThemeMode.dark 
+        : ThemeMode.light;
+        
+    return ListTile(
+      title: Text(S.of(context)!.themeColor),
+      trailing: DropdownButton<ThemeMode>(
+        value: currentTheme,
+        onChanged: (ThemeMode? newTheme) {
+          if (newTheme != null) {
+            (_appContext.findRootAncestorStateOfType<MyAppState>()?.changeTheme(newTheme));
+          }
+        },
+        items: [
+          DropdownMenuItem<ThemeMode>(
+            value: ThemeMode.system,
+            child: Text(S.of(context)!.systemTheme),
+          ),
+          DropdownMenuItem<ThemeMode>(
+            value: ThemeMode.light,
+            child: Text(S.of(context)!.lightTheme),
+          ),
+          DropdownMenuItem<ThemeMode>(
+            value: ThemeMode.dark,
+            child: Text(S.of(context)!.darkTheme),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     _appContext = context;
@@ -72,10 +104,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             onTap: () => _selectTime(context),
           ),
           const Divider(),
-          ListTile(
-            title: Text(S.of(context)!.themeColor),
-            onTap: () {},
-          ),
+          _buildThemeSelector(context),
         ],
       ),
     );
