@@ -1,0 +1,33 @@
+# Flutter相关
+/flutter/
+.dart_tool/
+.packages
+.pub-cache/
+.pub/
+/build/
+
+# Android相关
+/android/
+/ios/
+/linux/
+/macos/
+/windows/
+
+# IDE相关
+.idea/
+.vscode/
+*.iml
+*.swp
+*.swo
+
+# 环境文件
+.env
+.env.local
+.env.*.local
+
+# 系统文件
+.DS_Store
+Thumbs.db
+
+# 日志文件
+*.log
