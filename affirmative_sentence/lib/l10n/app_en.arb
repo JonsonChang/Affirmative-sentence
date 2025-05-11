@@ -18,5 +18,9 @@
   "language": "Language",
   "lightTheme": "Light",
   "darkTheme": "Dark", 
-  "systemTheme": "System"
+  "systemTheme": "System",
+  "fontSize": "Font Size",
+  "small": "Small",
+  "medium": "Medium",
+  "large": "Large"
 }

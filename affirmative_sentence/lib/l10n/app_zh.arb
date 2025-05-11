@@ -18,5 +18,9 @@
   "language": "語言",
   "lightTheme": "淺色",
   "darkTheme": "深色",
-  "systemTheme": "系統預設"
+  "systemTheme": "系統預設",
+  "fontSize": "字體大小",
+  "small": "小",
+  "medium": "中",
+  "large": "大"
 }

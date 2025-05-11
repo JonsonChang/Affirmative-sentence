@@ -47,6 +47,36 @@ class _SettingsScreenState extends State<SettingsScreen> {
     );
   }
 
+  Widget _buildFontSizeSelector(BuildContext context) {
+    final currentFontSize = _appContext.findRootAncestorStateOfType<MyAppState>()?.fontSize ?? 'medium';
+    
+    return ListTile(
+      title: Text(S.of(context)!.fontSize),
+      trailing: DropdownButton<String>(
+        value: currentFontSize,
+        onChanged: (String? newSize) {
+          if (newSize != null) {
+            (_appContext.findRootAncestorStateOfType<MyAppState>()?.changeFontSize(newSize));
+          }
+        },
+        items: [
+          DropdownMenuItem<String>(
+            value: 'small',
+            child: Text(S.of(context)!.small),
+          ),
+          DropdownMenuItem<String>(
+            value: 'medium',
+            child: Text(S.of(context)!.medium),
+          ),
+          DropdownMenuItem<String>(
+            value: 'large',
+            child: Text(S.of(context)!.large),
+          ),
+        ],
+      ),
+    );
+  }
+
   Widget _buildThemeSelector(BuildContext context) {
     final currentTheme = Theme.of(context).brightness == Brightness.dark 
         ? ThemeMode.dark 
@@ -104,6 +134,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             onTap: () => _selectTime(context),
           ),
           const Divider(),
+          _buildFontSizeSelector(context),
           _buildThemeSelector(context),
         ],
       ),

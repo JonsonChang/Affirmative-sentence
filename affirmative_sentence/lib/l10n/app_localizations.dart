@@ -37,6 +37,10 @@ class S {
   String get lightTheme => _localizedStrings['lightTheme']!;
   String get darkTheme => _localizedStrings['darkTheme']!;
   String get systemTheme => _localizedStrings['systemTheme']!;
+  String get fontSize => _localizedStrings['fontSize']!;
+  String get small => _localizedStrings['small']!;
+  String get medium => _localizedStrings['medium']!;
+  String get large => _localizedStrings['large']!;
 }
 
 class _SDelegate extends LocalizationsDelegate<S> {
@@ -76,7 +80,11 @@ S _lookupS(Locale locale) {
         'language': '語言',
         'lightTheme': '淺色',
         'darkTheme': '深色',
-        'systemTheme': '系統預設'
+        'systemTheme': '系統預設',
+        'fontSize': '字體大小',
+        'small': '小',
+        'medium': '中',
+        'large': '大'
       });
     default:
       return S({
@@ -98,7 +106,11 @@ S _lookupS(Locale locale) {
         'language': 'Language',
         'lightTheme': 'Light',
         'darkTheme': 'Dark',
-        'systemTheme': 'System'
+        'systemTheme': 'System',
+        'fontSize': 'Font Size',
+        'small': 'Small',
+        'medium': 'Medium',
+        'large': 'Large'
       });
   }
 }
