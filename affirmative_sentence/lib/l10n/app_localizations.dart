@@ -33,6 +33,7 @@ class S {
   String get health => _localizedStrings['health']!;
   String get success => _localizedStrings['success']!;
   String get add => _localizedStrings['add']!;
+  String get language => _localizedStrings['language']!;
 }
 
 class _SDelegate extends LocalizationsDelegate<S> {
@@ -68,7 +69,8 @@ S _lookupS(Locale locale) {
         'confidence': '自信',
         'health': '健康',
         'success': '成功',
-        'add': '新增'
+        'add': '新增',
+        'language': '語言'
       });
     default:
       return S({
@@ -86,7 +88,8 @@ S _lookupS(Locale locale) {
         'confidence': 'Confidence',
         'health': 'Health',
         'success': 'Success',
-        'add': 'Add'
+        'add': 'Add',
+        'language': 'Language'
       });
   }
 }

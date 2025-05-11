@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:affirmative_sentence/l10n/app_localizations.dart';
+import 'package:affirmative_sentence/main.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -9,6 +10,7 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
+  late BuildContext _appContext;
   TimeOfDay _notificationTime = const TimeOfDay(hour: 8, minute: 0);
   bool _notificationsEnabled = true;
 
@@ -24,14 +26,37 @@ class _SettingsScreenState extends State<SettingsScreen> {
     }
   }
 
+  Widget _buildLanguageSelector(BuildContext context) {
+    return ListTile(
+      title: Text(S.of(context)!.language),
+      trailing: DropdownButton<Locale>(
+        value: Localizations.localeOf(context),
+        onChanged: (Locale? newLocale) {
+          if (newLocale != null) {
+            (_appContext.findRootAncestorStateOfType<MyAppState>()?.changeLanguage(newLocale));
+          }
+        },
+        items: S.supportedLocales.map((Locale locale) {
+          final languageName = locale.languageCode == 'zh' ? '中文' : 'English';
+          return DropdownMenuItem<Locale>(
+            value: locale,
+            child: Text(languageName),
+          );
+        }).toList(),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    _appContext = context;
     return Scaffold(
       appBar: AppBar(
         title: Text(S.of(context)!.settings),
       ),
       body: ListView(
         children: [
+          _buildLanguageSelector(context),
           SwitchListTile(
             title: Text(S.of(context)!.enableNotifications),
             value: _notificationsEnabled,
