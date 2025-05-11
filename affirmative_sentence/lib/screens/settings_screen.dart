@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:affirmative_sentence/l10n/app_localizations.dart';
 import 'package:affirmative_sentence/main.dart';
+import 'package:affirmative_sentence/screens/notification_times_screen.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -11,19 +12,14 @@ class SettingsScreen extends StatefulWidget {
 
 class _SettingsScreenState extends State<SettingsScreen> {
   late BuildContext _appContext;
-  TimeOfDay _notificationTime = const TimeOfDay(hour: 8, minute: 0);
-  bool _notificationsEnabled = true;
 
-  Future<void> _selectTime(BuildContext context) async {
-    final TimeOfDay? picked = await showTimePicker(
-      context: context,
-      initialTime: _notificationTime,
+  Future<void> _navigateToNotificationTimes(BuildContext context) async {
+    await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const NotificationTimesScreen(),
+      ),
     );
-    if (picked != null && picked != _notificationTime) {
-      setState(() {
-        _notificationTime = picked;
-      });
-    }
   }
 
   Widget _buildLanguageSelector(BuildContext context) {
@@ -119,19 +115,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
       body: ListView(
         children: [
           _buildLanguageSelector(context),
-          SwitchListTile(
-            title: Text(S.of(context)!.enableNotifications),
-            value: _notificationsEnabled,
-            onChanged: (bool value) {
-              setState(() {
-                _notificationsEnabled = value;
-              });
-            },
-          ),
           ListTile(
-            title: Text(S.of(context)!.notificationTime),
-            subtitle: Text(_notificationTime.format(context)),
-            onTap: () => _selectTime(context),
+            title: Text(S.of(context)!.notificationTimes),
+            onTap: () => _navigateToNotificationTimes(context),
           ),
           const Divider(),
           _buildFontSizeSelector(context),

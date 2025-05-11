@@ -10,6 +10,8 @@
   "affirmationExample": "Affirmation Example {index}",
   "enableNotifications": "Enable Notifications",
   "notificationTime": "Notification Time",
+  "notificationTimes": "Notification Times",
+  "noNotificationTimes": "No notification times set",
   "themeColor": "Theme Color",
   "confidence": "Confidence",
   "health": "Health",

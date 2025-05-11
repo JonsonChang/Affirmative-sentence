@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:affirmative_sentence/screens/home_screen.dart';
 import 'package:affirmative_sentence/l10n/app_localizations.dart';
+import 'package:affirmative_sentence/models/notification_time.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Hive.initFlutter();
+  Hive.registerAdapter(NotificationTimeAdapter());
   runApp(const MyApp());
 }
 

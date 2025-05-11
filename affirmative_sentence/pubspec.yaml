@@ -13,15 +13,20 @@ dependencies:
   flutter_local_notifications: ^19.2.0
   sqflite: ^2.3.0
   provider: ^6.1.1
-  intl: ^0.19.0
+  intl: ^0.19.0 # 確保是最新版本
   flutter_localizations:
     sdk: flutter
   shared_preferences: ^2.2.2
+  hive: ^2.2.3
+  hive_flutter: ^1.1.0
 
 dev_dependencies:
+  hive_generator: ^2.0.1
+  build_runner: ^2.4.6
   flutter_test:
     sdk: flutter
   flutter_lints: ^5.0.0
+  intl_utils: ^2.7.0
 
 flutter:
   uses-material-design: true
