@@ -7,7 +7,6 @@
 /build/
 
 # Android相关
-/android/
 /ios/
 /linux/
 /macos/
