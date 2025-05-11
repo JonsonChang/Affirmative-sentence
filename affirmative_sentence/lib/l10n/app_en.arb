@@ -1,0 +1,18 @@
+{
+  "@@locale": "en",
+  "appTitle": "Affirmative Sentence",
+  "home": "Home",
+  "affirmations": "Affirmations",
+  "settings": "Settings",
+  "dailyAffirmations": "Daily Affirmations",
+  "todaysAffirmation": "Today's affirmation will appear here",
+  "myAffirmations": "My Affirmations", 
+  "affirmationExample": "Affirmation Example {index}",
+  "enableNotifications": "Enable Notifications",
+  "notificationTime": "Notification Time",
+  "themeColor": "Theme Color",
+  "confidence": "Confidence",
+  "health": "Health",
+  "success": "Success",
+  "add": "Add"
+}

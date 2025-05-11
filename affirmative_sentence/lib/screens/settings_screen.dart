@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:affirmative_sentence/l10n/app_localizations.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -27,12 +28,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('设置'),
+        title: Text(S.of(context)!.settings),
       ),
       body: ListView(
         children: [
           SwitchListTile(
-            title: const Text('启用通知'),
+            title: Text(S.of(context)!.enableNotifications),
             value: _notificationsEnabled,
             onChanged: (bool value) {
               setState(() {
@@ -41,13 +42,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
             },
           ),
           ListTile(
-            title: const Text('通知时间'),
+            title: Text(S.of(context)!.notificationTime),
             subtitle: Text(_notificationTime.format(context)),
             onTap: () => _selectTime(context),
           ),
           const Divider(),
           ListTile(
-            title: const Text('主题颜色'),
+            title: Text(S.of(context)!.themeColor),
             onTap: () {},
           ),
         ],

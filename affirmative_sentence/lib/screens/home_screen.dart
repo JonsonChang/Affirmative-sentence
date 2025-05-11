@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:affirmative_sentence/screens/affirmations_screen.dart';
 import 'package:affirmative_sentence/screens/settings_screen.dart';
+import 'package:affirmative_sentence/l10n/app_localizations.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -27,18 +28,18 @@ class _HomeScreenState extends State<HomeScreen> {
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
         onTap: (index) => setState(() => _currentIndex = index),
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: '首页',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.format_quote),
-            label: '肯定语',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
-            label: '设置',
+        items: [
+        BottomNavigationBarItem(
+          icon: Icon(Icons.home),
+          label: S.of(context)!.home,
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.format_quote),
+          label: S.of(context)!.affirmations,
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.settings),
+          label: S.of(context)!.settings,
           ),
         ],
       ),
@@ -53,10 +54,10 @@ class _HomeContent extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('每日肯定语'),
+        title: Text(S.of(context)!.dailyAffirmations),
       ),
-      body: const Center(
-        child: Text('今日肯定语将在这里显示'),
+      body: Center(
+        child: Text(S.of(context)!.todaysAffirmation),
       ),
     );
   }
