@@ -28,6 +28,15 @@ class _HomeScreenState extends State<HomeScreen> {
         children: _screens,
       ),
       bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Theme.of(context).brightness == Brightness.dark 
+            ? Colors.grey[900] 
+            : Colors.white,
+        selectedItemColor: Theme.of(context).brightness == Brightness.dark 
+            ? Colors.blue[200] 
+            : Colors.blue[800],
+        unselectedItemColor: Theme.of(context).brightness == Brightness.dark 
+            ? Colors.grey[400] 
+            : Colors.grey[600],
         currentIndex: _currentIndex,
         onTap: (index) => setState(() => _currentIndex = index),
         items: [
