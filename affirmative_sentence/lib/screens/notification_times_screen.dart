@@ -35,6 +35,18 @@ class _NotificationTimesScreenState extends State<NotificationTimesScreen> {
     );
 
     if (time != null) {
+      // 检查是否已存在相同时间
+      final isDuplicate = _notificationsBox.values.any(
+        (nt) => nt.hour == time.hour && nt.minute == time.minute
+      );
+      
+      if (isDuplicate) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(S.of(context)!.timeDuplicate))
+        );
+        return;
+      }
+
       final newNotification = NotificationTime.fromTime(
         id: DateTime.now().millisecondsSinceEpoch.toString(),
         time: time,
@@ -50,6 +62,18 @@ class _NotificationTimesScreenState extends State<NotificationTimesScreen> {
     );
 
     if (time != null) {
+      // 检查是否已存在相同时间(排除当前编辑项)
+      final isDuplicate = _notificationsBox.values
+        .where((nt) => nt.id != notification.id)
+        .any((nt) => nt.hour == time.hour && nt.minute == time.minute);
+      
+      if (isDuplicate) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(S.of(context)!.timeDuplicate))
+        );
+        return;
+      }
+
       final updatedNotification = NotificationTime.fromTime(
         id: notification.id,
         time: time,

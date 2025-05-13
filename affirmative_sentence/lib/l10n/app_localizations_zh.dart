@@ -9,29 +9,29 @@ class SZh extends S {
   SZh([String locale = 'zh']) : super(locale);
 
   @override
-  String get appTitle => '正向語句';
+  String get appTitle => '肯定語句';
 
   @override
   String get home => '首頁';
 
   @override
-  String get affirmations => '正向語句';
+  String get affirmations => '肯定語句';
 
   @override
   String get settings => '設定';
 
   @override
-  String get dailyAffirmations => '每日正向語句';
+  String get dailyAffirmations => '每日肯定語句';
 
   @override
-  String get todaysAffirmation => '今天的正向語句將顯示在這裡';
+  String get todaysAffirmation => '今天的肯定語句將顯示在這裡';
 
   @override
-  String get myAffirmations => '我的正向語句';
+  String get myAffirmations => '我的肯定語句';
 
   @override
   String affirmationExample(Object index) {
-    return '正向語句範例 $index';
+    return '肯定語句範例 $index';
   }
 
   @override
@@ -84,4 +84,7 @@ class SZh extends S {
 
   @override
   String get large => '大';
+
+  @override
+  String get timeDuplicate => 'This time already exists';
 }

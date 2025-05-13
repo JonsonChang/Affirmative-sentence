@@ -84,4 +84,7 @@ class SEn extends S {
 
   @override
   String get large => 'Large';
+
+  @override
+  String get timeDuplicate => 'This time already exists';
 }

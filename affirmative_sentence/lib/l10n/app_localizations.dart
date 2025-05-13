@@ -244,6 +244,12 @@ abstract class S {
   /// In en, this message translates to:
   /// **'Large'**
   String get large;
+
+  /// No description provided for @timeDuplicate.
+  ///
+  /// In en, this message translates to:
+  /// **'This time already exists'**
+  String get timeDuplicate;
 }
 
 class _SDelegate extends LocalizationsDelegate<S> {

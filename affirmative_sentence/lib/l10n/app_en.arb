@@ -24,5 +24,6 @@
   "fontSize": "Font Size",
   "small": "Small",
   "medium": "Medium",
-  "large": "Large"
+  "large": "Large",
+  "timeDuplicate": "This time already exists"
 }
