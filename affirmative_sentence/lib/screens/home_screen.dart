@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:affirmative_sentence/screens/affirmations_screen.dart';
+import 'package:affirmative_sentence/screens/notification_times_screen.dart';
 import 'package:affirmative_sentence/screens/settings_screen.dart';
 import 'package:affirmative_sentence/l10n/app_localizations.dart';
 
@@ -15,6 +16,7 @@ class _HomeScreenState extends State<HomeScreen> {
   final List<Widget> _screens = [
     const _HomeContent(),
     const AffirmationsScreen(),
+    const NotificationTimesScreen(),
     const SettingsScreen(),
   ];
 
@@ -36,6 +38,10 @@ class _HomeScreenState extends State<HomeScreen> {
         BottomNavigationBarItem(
           icon: Icon(Icons.format_quote),
           label: S.of(context)!.affirmations,
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.notifications),
+          label: S.of(context)!.notificationTimes,
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.settings),

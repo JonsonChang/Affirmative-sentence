@@ -12,6 +12,7 @@ class NotificationTimesScreen extends StatefulWidget {
 
 class _NotificationTimesScreenState extends State<NotificationTimesScreen> {
   late Box<NotificationTime> _notificationsBox;
+  bool _isLoading = true;
 
   @override
   void initState() {
@@ -20,7 +21,11 @@ class _NotificationTimesScreenState extends State<NotificationTimesScreen> {
   }
 
   Future<void> _initHive() async {
-    _notificationsBox = await Hive.openBox<NotificationTime>('notification_times');
+    try {
+      _notificationsBox = await Hive.openBox<NotificationTime>('notification_times');
+    } finally {
+      setState(() => _isLoading = false);
+    }
   }
 
   Future<void> _addNotificationTime() async {
@@ -70,6 +75,9 @@ class _NotificationTimesScreenState extends State<NotificationTimesScreen> {
 
   @override
   Widget build(BuildContext context) {
+    if (_isLoading) {
+      return const Center(child: CircularProgressIndicator());
+    }
     return Scaffold(
       appBar: AppBar(
         title: Text(S.of(context)!.notificationTimes),
