@@ -86,5 +86,20 @@ class SZh extends S {
   String get large => '大';
 
   @override
-  String get timeDuplicate => 'This time already exists';
+  String get timeDuplicate => '此時間已存在';
+
+  @override
+  String get addGroup => '新增群組';
+
+  @override
+  String get editGroup => '編輯群組';
+
+  @override
+  String get editAffirmation => '編輯肯定語句';
+
+  @override
+  String get affirmationText => '肯定語句內容';
+
+  @override
+  String get groupName => '群組名稱';
 }

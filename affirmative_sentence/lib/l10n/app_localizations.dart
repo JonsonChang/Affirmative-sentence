@@ -250,6 +250,36 @@ abstract class S {
   /// In en, this message translates to:
   /// **'This time already exists'**
   String get timeDuplicate;
+
+  /// No description provided for @addGroup.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Group'**
+  String get addGroup;
+
+  /// No description provided for @editGroup.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Group'**
+  String get editGroup;
+
+  /// No description provided for @editAffirmation.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Affirmation'**
+  String get editAffirmation;
+
+  /// No description provided for @affirmationText.
+  ///
+  /// In en, this message translates to:
+  /// **'Affirmation Text'**
+  String get affirmationText;
+
+  /// No description provided for @groupName.
+  ///
+  /// In en, this message translates to:
+  /// **'Group Name'**
+  String get groupName;
 }
 
 class _SDelegate extends LocalizationsDelegate<S> {

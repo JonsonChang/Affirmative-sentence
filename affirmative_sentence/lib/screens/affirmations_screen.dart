@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'dart:convert';
+import 'package:affirmative_sentence/l10n/app_localizations.dart';
 
 class Affirmation {
   String text;
@@ -75,10 +76,10 @@ class _AffirmationsScreenState extends State<AffirmationsScreen> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Add Group'),
+        title: Text(S.of(context)!.addGroup),
         content: TextField(
           autofocus: true,
-          decoration: const InputDecoration(hintText: 'Group Name'),
+          decoration: InputDecoration(hintText: S.of(context)!.groupName),
           onSubmitted: (name) {
             if (name.isNotEmpty) {
               setState(() => _groups.add(AffirmationGroup(name)));
@@ -94,11 +95,11 @@ class _AffirmationsScreenState extends State<AffirmationsScreen> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Edit Group'),
+        title: Text(S.of(context)!.editGroup),
         content: TextField(
           autofocus: true,
           controller: TextEditingController(text: _groups[index].name),
-          decoration: const InputDecoration(hintText: 'Group Name'),
+          decoration: InputDecoration(hintText: S.of(context)!.groupName),
           onSubmitted: (name) {
             if (name.isNotEmpty) {
               setState(() => _groups[index].name = name);
@@ -118,10 +119,10 @@ class _AffirmationsScreenState extends State<AffirmationsScreen> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Add Affirmation'),
+        title: Text(S.of(context)!.add),
         content: TextField(
           autofocus: true,
-          decoration: const InputDecoration(hintText: 'Affirmation Text'),
+          decoration: InputDecoration(hintText: S.of(context)!.affirmationText),
           onSubmitted: (text) {
             if (text.isNotEmpty) {
               setState(() => _groups[groupIndex].affirmations.add(Affirmation(text)));
@@ -137,12 +138,12 @@ class _AffirmationsScreenState extends State<AffirmationsScreen> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Edit Affirmation'),
+        title: Text(S.of(context)!.editAffirmation),
         content: TextField(
           autofocus: true,
           controller: TextEditingController(
               text: _groups[groupIndex].affirmations[affirmationIndex].text),
-          decoration: const InputDecoration(hintText: 'Affirmation Text'),
+          decoration: InputDecoration(hintText: S.of(context)!.affirmationText),
           onSubmitted: (text) {
             if (text.isNotEmpty) {
               setState(() => _groups[groupIndex].affirmations[affirmationIndex].text = text);
@@ -175,7 +176,7 @@ class _AffirmationsScreenState extends State<AffirmationsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('My Affirmations'),
+        title: Text(S.of(context)!.myAffirmations),
         actions: [
           IconButton(
             icon: const Icon(Icons.add),
@@ -245,7 +246,7 @@ class _AffirmationsScreenState extends State<AffirmationsScreen> {
                       }).toList(),
                       ListTile(
                         leading: const Icon(Icons.add),
-                        title: const Text('Add Affirmation'),
+                        title: Text(S.of(context)!.add),
                         onTap: () => _addAffirmation(index),
                       ),
                     ],

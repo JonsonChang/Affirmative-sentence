@@ -87,4 +87,19 @@ class SEn extends S {
 
   @override
   String get timeDuplicate => 'This time already exists';
+
+  @override
+  String get addGroup => 'Add Group';
+
+  @override
+  String get editGroup => 'Edit Group';
+
+  @override
+  String get editAffirmation => 'Edit Affirmation';
+
+  @override
+  String get affirmationText => 'Affirmation Text';
+
+  @override
+  String get groupName => 'Group Name';
 }
