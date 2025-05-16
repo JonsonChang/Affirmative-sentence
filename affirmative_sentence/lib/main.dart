@@ -6,11 +6,19 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:affirmative_sentence/screens/home_screen.dart';
 import 'package:affirmative_sentence/l10n/app_localizations.dart';
 import 'package:affirmative_sentence/models/notification_time.dart';
+import 'package:affirmative_sentence/screens/affirmations_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  
+  // 初始化Hive
   await Hive.initFlutter();
+  
+  // 註冊Adapter
+  Hive.registerAdapter(AffirmationAdapter());
+  Hive.registerAdapter(AffirmationGroupAdapter());
   Hive.registerAdapter(NotificationTimeAdapter());
+  
   runApp(const MyApp());
 }
 

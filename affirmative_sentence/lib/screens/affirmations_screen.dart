@@ -2,9 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'dart:convert';
 import 'package:affirmative_sentence/l10n/app_localizations.dart';
+import 'package:hive/hive.dart';
 
+part 'affirmations_screen.g.dart';
+
+@HiveType(typeId: 2)
 class Affirmation {
+  @HiveField(0)
   String text;
+  @HiveField(1)
   bool isEnabled;
 
   Affirmation(this.text, {this.isEnabled = true});
@@ -22,8 +28,11 @@ class Affirmation {
   }
 }
 
+@HiveType(typeId: 3)
 class AffirmationGroup {
+  @HiveField(0)
   String name;
+  @HiveField(1)
   List<Affirmation> affirmations;
 
   AffirmationGroup(this.name, {List<Affirmation>? affirmations})
@@ -59,12 +68,23 @@ class _AffirmationsScreenState extends State<AffirmationsScreen> {
     setState(() => _isLoading = true);
     
     try {
-      final file = 'assets/affirmations.json';
-          
-      final data = await rootBundle.loadString(file);
-      _groups = (json.decode(data)['categories'] as List)
-          .map((g) => AffirmationGroup.fromJson(g))
-          .toList();
+      // 嘗試從Hive讀取數據
+      final box = await Hive.openBox<AffirmationGroup>('affirmation_groups');
+      
+      if (box.isEmpty) {
+        // 如果Hive中沒有數據，從assets讀取初始數據
+        final file = 'assets/affirmations.json';
+        final data = await rootBundle.loadString(file);
+        _groups = (json.decode(data)['categories'] as List)
+            .map((g) => AffirmationGroup.fromJson(g))
+            .toList();
+        
+        // 將初始數據存入Hive
+        await box.addAll(_groups);
+      } else {
+        // 從Hive讀取數據
+        _groups = box.values.toList();
+      }
     } catch (e) {
       _groups = [];
     }
@@ -80,9 +100,16 @@ class _AffirmationsScreenState extends State<AffirmationsScreen> {
         content: TextField(
           autofocus: true,
           decoration: InputDecoration(hintText: S.of(context)!.groupName),
-          onSubmitted: (name) {
-            if (name.isNotEmpty) {
-              setState(() => _groups.add(AffirmationGroup(name)));
+          onSubmitted: (text) async {
+            if (text.isNotEmpty) {
+              final box = await Hive.openBox<AffirmationGroup>('affirmation_groups');
+              final newGroup = AffirmationGroup(text);
+              
+              setState(() => _groups.add(newGroup));
+              
+              // 更新Hive中的數據
+              await box.add(newGroup);
+              
               Navigator.pop(context);
             }
           },
@@ -123,9 +150,16 @@ class _AffirmationsScreenState extends State<AffirmationsScreen> {
         content: TextField(
           autofocus: true,
           decoration: InputDecoration(hintText: S.of(context)!.affirmationText),
-          onSubmitted: (text) {
+          onSubmitted: (text) async {
             if (text.isNotEmpty) {
-              setState(() => _groups[groupIndex].affirmations.add(Affirmation(text)));
+              final box = await Hive.openBox<AffirmationGroup>('affirmation_groups');
+              final newAffirmation = Affirmation(text);
+              
+              setState(() => _groups[groupIndex].affirmations.add(newAffirmation));
+              
+              // 更新Hive中的數據
+              await box.putAt(groupIndex, _groups[groupIndex]);
+              
               Navigator.pop(context);
             }
           },
