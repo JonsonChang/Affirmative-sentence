@@ -178,9 +178,15 @@ class _AffirmationsScreenState extends State<AffirmationsScreen> {
           controller: TextEditingController(
               text: _groups[groupIndex].affirmations[affirmationIndex].text),
           decoration: InputDecoration(hintText: S.of(context)!.affirmationText),
-          onSubmitted: (text) {
+          onSubmitted: (text) async {
             if (text.isNotEmpty) {
+              final box = await Hive.openBox<AffirmationGroup>('affirmation_groups');
+              
               setState(() => _groups[groupIndex].affirmations[affirmationIndex].text = text);
+              
+              // 更新Hive中的數據
+              await box.putAt(groupIndex, _groups[groupIndex]);
+              
               Navigator.pop(context);
             }
           },
