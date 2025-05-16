@@ -15,6 +15,7 @@ class NotificationService {
   late Box<AffirmationGroup> _affirmationBox;
 
   Future<void> initialize() async {
+    print('[DEBUG] Initializing notification service');
     _notificationsPlugin = FlutterLocalNotificationsPlugin();
     _notificationBox = await Hive.openBox<NotificationTime>('notification_times');
     _affirmationBox = await Hive.openBox<AffirmationGroup>('affirmation_groups');
@@ -29,9 +30,26 @@ class NotificationService {
       android: initializationSettingsAndroid,
     );
 
+    // Create enhanced notification channel
+    const AndroidNotificationChannel channel = AndroidNotificationChannel(
+      'affirmation_channel',
+      '肯定語句通知',
+      importance: Importance.max,
+      playSound: true,
+      enableVibration: true,
+      sound: RawResourceAndroidNotificationSound('notification'),
+      showBadge: true,
+    );
+    
+    print('[DEBUG] Creating enhanced notification channel');
+    await _notificationsPlugin
+        .resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()
+        ?.createNotificationChannel(channel);
+
     await _notificationsPlugin.initialize(
       initializationSettings,
     );
+    print('[DEBUG] Notification service initialized successfully');
 
     _scheduleAllNotifications();
   }
@@ -99,28 +117,49 @@ class NotificationService {
   }
 
   Future<void> triggerTestNotification() async {
+    print('[DEBUG] Test notification triggered');
+    
+    // 檢查並請求權限
+    final androidPlugin = _notificationsPlugin.resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>();
+    
+    if (androidPlugin != null) {
+      final bool? granted = await androidPlugin.areNotificationsEnabled();
+      
+      if (granted != true) {
+        print('[DEBUG] Requesting notification permission');
+        final bool? result = await androidPlugin.requestNotificationsPermission();
+        if (result != true) {
+          print('[DEBUG] User denied notification permission');
+          throw Exception('請開啟系統通知權限');
+        }
+      }
+    }
+
     final affirmations = _getEnabledAffirmations();
     if (affirmations.isEmpty) {
+      print('[DEBUG] No enabled affirmations found');
       throw Exception('沒有啟用的肯定句');
     }
 
     final randomAffirmation = 
       affirmations[DateTime.now().millisecond % affirmations.length];
     
+    print('[DEBUG] Showing notification with affirmation: ${randomAffirmation.text}');
     await _notificationsPlugin.show(
-      9999, // 使用特殊ID區分測試通知
+      9999,
       '測試通知',
       randomAffirmation.text,
       const NotificationDetails(
         android: AndroidNotificationDetails(
           'affirmation_channel',
           '肯定語句通知',
-          importance: Importance.high,
+          importance: Importance.max,
           priority: Priority.high,
           playSound: true,
           enableVibration: true,
         ),
       ),
     );
+    print('[DEBUG] Notification shown successfully');
   }
 }

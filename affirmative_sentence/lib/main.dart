@@ -20,8 +20,13 @@ void main() async {
   Hive.registerAdapter(AffirmationGroupAdapter());
   Hive.registerAdapter(NotificationTimeAdapter());
   
+  try {
+    await NotificationService().initialize();
+  } catch (e) {
+    print('Failed to initialize notifications: $e');
+  }
+  
   runApp(const MyApp());
-  await NotificationService().initialize();
 }
 
 class MyApp extends StatefulWidget {
