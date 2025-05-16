@@ -28,6 +28,7 @@ class _HomeScreenState extends State<HomeScreen> {
         children: _screens,
       ),
       bottomNavigationBar: BottomNavigationBar(
+        showUnselectedLabels: true,
         backgroundColor: Theme.of(context).brightness == Brightness.dark 
             ? Colors.grey[900] 
             : Colors.white,
