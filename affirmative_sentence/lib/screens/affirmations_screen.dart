@@ -75,17 +75,17 @@ class _AffirmationsScreenState extends State<AffirmationsScreen> {
       final box = await _getBox();
 
       if (box.isEmpty) {
-        // ¦pªGHive¤¤¨S¦³¼Æ¾Ú¡A±qassetsÅª¨úªì©l¼Æ¾Ú
+        // å¦‚æœHiveä¸­æ²’æœ‰æ•¸æ“šï¼Œå¾assetsè®€å–åˆå§‹æ•¸æ“š
         final file = 'assets/affirmations.json';
         final data = await rootBundle.loadString(file);
         _groups = (json.decode(data)['categories'] as List)
             .map((g) => AffirmationGroup.fromJson(g))
             .toList();
         
-        // ±Nªì©l¼Æ¾Ú¦s¤JHive
+        // å°‡åˆå§‹æ•¸æ“šå­˜å…¥Hive
         await box.addAll(_groups);
       } else {
-        // ±qHiveÅª¨ú¼Æ¾Ú
+        // å¾Hiveè®€å–æ•¸æ“š
         _groups = box.values.toList();
       }
     } catch (e) {
