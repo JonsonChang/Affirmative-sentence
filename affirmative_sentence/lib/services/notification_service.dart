@@ -24,13 +24,33 @@ class NotificationService {
       return false;
     }
     
+    // 檢查並請求通知權限
     final notificationsEnabled = await androidPlugin.areNotificationsEnabled();
     print('[CAPABILITY] 系統通知權限: $notificationsEnabled');
     
+    if (notificationsEnabled == null) {
+      print('[CAPABILITY] 無法獲取通知權限狀態');
+      return false;
+    }
+    
+    if (notificationsEnabled == false) {
+      print('[CAPABILITY] 請求通知權限');
+      final granted = await androidPlugin.requestNotificationsPermission();
+      if (granted == null || granted == false) {
+        print('[CAPABILITY] 用戶拒絕通知權限或權限請求失敗');
+        return false;
+      }
+    }
+    
+    // 檢查精確排程權限
     final canScheduleExact = await androidPlugin.canScheduleExactNotifications();
     print('[CAPABILITY] 精確排程權限: $canScheduleExact');
     
-    return notificationsEnabled == true;
+    if (canScheduleExact == false) {
+      print('[CAPABILITY] 警告: 無精確排程權限，將使用非精確排程');
+    }
+    
+    return true;
   }
 
   Future<void> initialize() async {
@@ -42,7 +62,10 @@ class NotificationService {
     final hasCapability = await _checkDeviceCapability();
     if (!hasCapability) {
       print('[WARNING] 設備通知能力不足，通知可能無法正常顯示');
+      return;
     }
+    
+    print('[DEBUG] 設備通知能力檢查通過');
 
     tz.initializeTimeZones();
 
@@ -66,14 +89,26 @@ class NotificationService {
     );
     
     print('[DEBUG] Creating enhanced notification channel');
-    await _notificationsPlugin
-        .resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()
-        ?.createNotificationChannel(channel);
-
-    await _notificationsPlugin.initialize(
-      initializationSettings,
-    );
-    print('[DEBUG] Notification service initialized successfully');
+    final androidNotifications = _notificationsPlugin
+        .resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>();
+    
+    if (androidNotifications == null) {
+      print('[ERROR] 無法獲取Android通知插件');
+      return;
+    }
+    
+    await androidNotifications.createNotificationChannel(channel);
+    print('[DEBUG] 通知渠道創建成功');
+    
+    try {
+      await _notificationsPlugin.initialize(
+        initializationSettings,
+      );
+      print('[DEBUG] Notification service initialized successfully');
+    } catch (e) {
+      print('[ERROR] 通知服務初始化失敗: $e');
+      rethrow;
+    }
 
     _scheduleAllNotifications();
   }
@@ -195,16 +230,24 @@ class NotificationService {
     // 檢查並請求權限
     final androidPlugin = _notificationsPlugin.resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>();
     
-    if (androidPlugin != null) {
-      final bool? granted = await androidPlugin.areNotificationsEnabled();
-      
-      if (granted != true) {
-        print('[DEBUG] Requesting notification permission');
-        final bool? result = await androidPlugin.requestNotificationsPermission();
-        if (result != true) {
-          print('[DEBUG] User denied notification permission');
-          throw Exception('請開啟系統通知權限');
-        }
+    if (androidPlugin == null) {
+      throw Exception('無法獲取Android通知插件');
+    }
+    
+    final granted = await androidPlugin.areNotificationsEnabled();
+    if (granted == null) {
+      throw Exception('無法獲取通知權限狀態');
+    }
+    
+    if (granted == false) {
+      print('[DEBUG] Requesting notification permission');
+      final result = await androidPlugin.requestNotificationsPermission();
+      if (result == null) {
+        throw Exception('權限請求失敗');
+      }
+      if (result == false) {
+        print('[DEBUG] User denied notification permission');
+        throw Exception('請開啟系統通知權限');
       }
     }
 
