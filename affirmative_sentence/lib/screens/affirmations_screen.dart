@@ -138,8 +138,10 @@ class _AffirmationsScreenState extends State<AffirmationsScreen> {
     );
   }
 
-  void _deleteGroup(int index) {
+  void _deleteGroup(int index) async {
+    final box = await Hive.openBox<AffirmationGroup>('affirmation_groups');
     setState(() => _groups.removeAt(index));
+    await box.deleteAt(index);
   }
 
   void _addAffirmation(int groupIndex) {
@@ -195,8 +197,10 @@ class _AffirmationsScreenState extends State<AffirmationsScreen> {
     );
   }
 
-  void _deleteAffirmation(int groupIndex, int affirmationIndex) {
+  void _deleteAffirmation(int groupIndex, int affirmationIndex) async {
+    final box = await Hive.openBox<AffirmationGroup>('affirmation_groups');
     setState(() => _groups[groupIndex].affirmations.removeAt(affirmationIndex));
+    await box.putAt(groupIndex, _groups[groupIndex]);
   }
 
   void _toggleAffirmation(int groupIndex, int affirmationIndex) {
