@@ -210,6 +210,14 @@ class _AffirmationsScreenState extends State<AffirmationsScreen> {
     });
   }
 
+  void _toggleAllAffirmations(int groupIndex, bool value) async {
+    final box = await Hive.openBox<AffirmationGroup>('affirmation_groups');
+    setState(() {
+      _groups[groupIndex].affirmations.forEach((a) => a.isEnabled = value);
+    });
+    await box.putAt(groupIndex, _groups[groupIndex]);
+  }
+
   @override
   void initState() {
     super.initState();
@@ -240,6 +248,13 @@ class _AffirmationsScreenState extends State<AffirmationsScreen> {
                     title: Row(
                       children: [
                         Expanded(child: Text(group.name)),
+                        Switch(
+                          value: group.affirmations.isNotEmpty && 
+                                group.affirmations.every((a) => a.isEnabled),
+                          onChanged: group.affirmations.isEmpty 
+                              ? null 
+                              : (value) => _toggleAllAffirmations(index, value),
+                        ),
                         IconButton(
                           icon: const Icon(Icons.edit, size: 20),
                           onPressed: () => _editGroup(index),
