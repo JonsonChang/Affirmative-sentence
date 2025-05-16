@@ -255,16 +255,21 @@ class _AffirmationsScreenState extends State<AffirmationsScreen> {
                           trailing: Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              IconButton(
-                                icon: Icon(
-                                  affirmation.isEnabled
-                                      ? Icons.toggle_on
-                                      : Icons.toggle_off,
-                                  color: affirmation.isEnabled
-                                      ? Colors.green
-                                      : Colors.grey,
-                                ),
-                                onPressed: () => _toggleAffirmation(index, affirmationIndex),
+                              Switch(
+                                value: affirmation.isEnabled,
+                                onChanged: (value) async {
+                                  final box = await Hive.openBox<AffirmationGroup>('affirmation_groups');
+                                  
+                                  setState(() {
+                                    affirmation.isEnabled = value;
+                                  });
+                                  
+                                  // 找到所屬的group索引
+                                  final groupIndex = _groups.indexWhere((g) => g.affirmations.contains(affirmation));
+                                  if (groupIndex != -1) {
+                                    await box.putAt(groupIndex, _groups[groupIndex]);
+                                  }
+                                },
                               ),
                               IconButton(
                                 icon: const Icon(Icons.edit, size: 20),
