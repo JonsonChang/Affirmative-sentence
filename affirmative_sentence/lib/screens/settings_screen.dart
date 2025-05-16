@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:affirmative_sentence/l10n/app_localizations.dart';
 import 'package:affirmative_sentence/main.dart';
 import 'package:affirmative_sentence/screens/notification_times_screen.dart';
+import 'package:affirmative_sentence/services/notification_service.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -122,6 +123,23 @@ class _SettingsScreenState extends State<SettingsScreen> {
           const Divider(),
           _buildFontSizeSelector(context),
           _buildThemeSelector(context),
+          const Divider(),
+          ListTile(
+            title: Text('測試通知功能'),
+            trailing: Icon(Icons.notifications),
+            onTap: () async {
+              try {
+                await NotificationService().triggerTestNotification();
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text('測試通知已觸發'))
+                );
+              } catch (e) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text('測試通知失敗: $e'))
+                );
+              }
+            },
+          ),
         ],
       ),
     );

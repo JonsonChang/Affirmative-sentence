@@ -7,6 +7,7 @@ import 'package:affirmative_sentence/screens/home_screen.dart';
 import 'package:affirmative_sentence/l10n/app_localizations.dart';
 import 'package:affirmative_sentence/models/notification_time.dart';
 import 'package:affirmative_sentence/screens/affirmations_screen.dart';
+import 'package:affirmative_sentence/services/notification_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -20,6 +21,7 @@ void main() async {
   Hive.registerAdapter(NotificationTimeAdapter());
   
   runApp(const MyApp());
+  await NotificationService().initialize();
 }
 
 class MyApp extends StatefulWidget {

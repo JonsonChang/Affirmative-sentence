@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:affirmative_sentence/models/notification_time.dart';
 import 'package:affirmative_sentence/l10n/app_localizations.dart';
+import 'package:affirmative_sentence/services/notification_service.dart';
 
 class NotificationTimesScreen extends StatefulWidget {
   const NotificationTimesScreen({super.key});
@@ -52,6 +53,7 @@ class _NotificationTimesScreenState extends State<NotificationTimesScreen> {
         time: time,
       );
       await _notificationsBox.add(newNotification);
+      await NotificationService().rescheduleNotifications();
     }
   }
 
@@ -80,6 +82,7 @@ class _NotificationTimesScreenState extends State<NotificationTimesScreen> {
         enabled: notification.enabled,
       );
       await _notificationsBox.putAt(index, updatedNotification);
+      await NotificationService().rescheduleNotifications();
     }
   }
 
@@ -91,10 +94,12 @@ class _NotificationTimesScreenState extends State<NotificationTimesScreen> {
       enabled: !notification.enabled,
     );
     await _notificationsBox.putAt(index, updatedNotification);
+    await NotificationService().rescheduleNotifications();
   }
 
   Future<void> _deleteNotificationTime(int index) async {
     await _notificationsBox.deleteAt(index);
+    await NotificationService().rescheduleNotifications();
   }
 
   @override
